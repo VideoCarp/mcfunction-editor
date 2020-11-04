@@ -1,0 +1,11 @@
+QWidget {
+    color: #aaa;
+    background-color: #222;
+}
+QPlainTextEdit {
+   font-family: "Open Sans";
+   border: 1px groove #aaa;
+}
+QPushButton {
+   border: 1px groove #aaa;
+}
