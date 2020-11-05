@@ -1,6 +1,6 @@
 import sys
-from PyQt5.QtCore import QRegExp
-from PyQt5.QtGui import QColor, QTextCharFormat, QFont, QSyntaxHighlighter
+from PySide2.QtCore import QRegExp
+from PySide2.QtGui import QColor, QTextCharFormat, QFont, QSyntaxHighlighter
 import time
 print("Syntax Highlighter imported.")
 def format(color, style=''):
