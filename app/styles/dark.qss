@@ -4,8 +4,11 @@ QWidget {
 }
 QPlainTextEdit {
    font-family: "Open Sans";
-   border: 1px groove #aaa;
+   border: 1.5px groove #ffffff;
 }
 QPushButton {
-   border: 1px groove #aaa;
+   border: 1px groove #ffffff;
+}
+QLineEdit {
+  border: 1px groove #aaa;
 }
