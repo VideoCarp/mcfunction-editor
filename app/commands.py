@@ -68,7 +68,7 @@ def Execute(var):
     "cmd": lambda: doCommand(var),
     "wikib": lambda: tabbrowser("https://wiki.bedrock.dev"),
     "tutorialb": lambda: tabbrowser("https://wiki.bedrock.dev/tutorials/beginner-commands.html"),
-    "repo": lambda: tabbrowser("https://github.com/VideoCarp/mcfunction-editor/blob/main/app/main.py")
+    "repo": lambda: tabbrowser("https://github.com/VideoCarp/mcfunction-editor/blob/main/app/main.py"),
     "tutorialj": lambda: tabbrowser("https://www.digminecraft.com/game_commands/index.php")
     }
     startsSwitch(var, condition)
