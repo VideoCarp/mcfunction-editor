@@ -1,5 +1,10 @@
 # MCFunction Editor
-Discord Server: https://discord.gg/sTUFucA5xU<br>
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/VideoCarp/mcfunction-editor/main/repo/42F1B69E-6C0E-4E06-903C-E609D94D9245.png">
+  <br>
+  <a href="https://discord.gg/sTUFucA5xU">Discord Server</a>
+</div>
 This is a ready-to-use but being worked on text editor for Minecraft commands.<br>
 It's currently aimed at Minecraft Bedrock Edition ***and*** Java Edition.<br>
 See [CONTRIBUTING.md](https://github.com/VideoCarp/mcfunction-editor/blob/main/CONTRIBUTING.md) for contributions
