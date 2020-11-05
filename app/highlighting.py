@@ -2,6 +2,7 @@ import sys
 from PySide2.QtCore import QRegExp
 from PySide2.QtGui import QColor, QTextCharFormat, QFont, QSyntaxHighlighter
 import time
+
 print("Syntax Highlighter imported.")
 def format(color, style=''):
     """
@@ -26,7 +27,7 @@ def format(color, style=''):
 # Syntax styles that can be shared by all languages
 
 STYLES = {
-    'keyword': format([127,255,0], 'italic'), # basically lime (chartreuse)
+    'keyword': format([65, 173, 209], 'italic'), # light blue
     'operator': format([52, 125, 235]), # cobalt (almost)
     'brace': format([114,137,218]), # tomato
     'string': format([216, 219, 42]), # yellow
@@ -81,12 +82,12 @@ class MCFunction(QSyntaxHighlighter):
 
 
             # From '#' until a newline
-            (r'#[^\n]*', 0, STYLES['comment']),
 
             # Numeric literals
             (r'\b[+-]?[0-9]+[lL]?\b', 0, STYLES['numbers']),
             (r'\b[+-]?0[xX][0-9A-Fa-f]+[lL]?\b', 0, STYLES['numbers']),
             (r'\b[+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\b', 0, STYLES['numbers']),
+            (r'#[^\n]*', 0, STYLES['comment']),
         ]
         print("Done ruleset.")
 
@@ -99,6 +100,7 @@ class MCFunction(QSyntaxHighlighter):
             index = expression.indexIn(text, 0)
 
             while index >= 0:
+                #
                 index = expression.pos(nth)
                 length = len(expression.cap(nth))
                 self.setFormat(index, length, format)
