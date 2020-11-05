@@ -12,10 +12,10 @@ Everything you add must be finished. This means that it works and does what you 
 For example, if you're adding a new widget, make sure the widget displays and after the pull request is accepted,
  only improvements can be done to the widget, not bug fixes or finishing it up.
 
-**Removing** features:
+**Removing** Features:<br>
 Only delete things that are useless, or unused and are costing performance.<br>
 
-**Improving** Features:
+**Improving** Features:<br>
 As long as it works and is an improvement, your pull request would probably be accepted.
 # Feature Requests
 If you don't use Python (meaning you wouldn't be able to pull request) and/or don't know how to implement a feature, but you want a feature added, just tell us in the discord server or an issue.
