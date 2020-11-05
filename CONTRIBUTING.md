@@ -1,5 +1,5 @@
 # Contributing
-*Scroll down for feature requests.*
+*Scroll down for feature requests.*<br>
 All contributions are welcome, but here are some things you need to check before opening a pull request:<br>
 These are for **adding** features:
 * __Working__<br>
