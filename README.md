@@ -14,5 +14,8 @@ The text editor is relatively small compared to any others. The download size is
 You can *easily* manipulate parts of the text editor by just configuring variables.
 * __Aimed at Commands__<br>
 This editor is aimed specifically for commands and mcfunction, nothing else meaning it's the main focus and will be richest.
+* __Command Bar__<br>
+*Does not refer to CLI*<br>
+The editor has a small command bar which you can run Python, some editor methods, or get documentation from.<br>
 # Screenshots:
 None yet, but I'll get some.
