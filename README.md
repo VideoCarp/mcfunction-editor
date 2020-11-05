@@ -1,6 +1,8 @@
 # MCFunction Editor
 This is a ready-to-use but being worked on text editor for Minecraft commands.<br>
-It is written in Python.
+It's currently aimed at Minecraft Bedrock Edition ***and*** Java Edition.<br>
+See [CONTRIBUTING.md](https://github.com/VideoCarp/mcfunction-editor/blob/main/CONTRIBUTING.md) for contributions
+and/or feature requests.
 # Features:
 * __Syntax Highlighting__<br>
 This editor has proper syntax highlighting for commands.
