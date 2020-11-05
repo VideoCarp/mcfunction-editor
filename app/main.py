@@ -1,10 +1,10 @@
 import sys
 import time
-import highlighting
+import highlighting, commands
 from os import path
-from PySide2.QtGui import QTextDocument, QKeySequence
-from PySide2.QtWidgets import QApplication,QLabel,QWidget,QGridLayout,QPushButton\
-,QPlainTextEdit,QFileDialog, QCompleter, QShortcut
+from PyQt5.QtGui import QTextDocument, QKeySequence
+from PyQt5.QtWidgets import QApplication,QLabel,QWidget,QGridLayout,QPushButton\
+,QPlainTextEdit,QFileDialog, QCompleter, QShortcut, QLineEdit
 import threading
 
 saveLocation = None
@@ -31,12 +31,13 @@ def Prompt(option):
                 pass
 
         if ScopeAvoid.normalSavePath is not None:
-            with open(path.realpath(ScopeAvoid.normalSavePath), "w+") as file:
-                try:
+            try:
+                with open(path.realpath(ScopeAvoid.normalSavePath), "w+") as file:
                     file.write(mainTextBox.toPlainText())
-                except:
-                    print("Logging: Failed to get path for file.")
-            
+            except:
+                print("Logging: Failed to get file path.")
+
+ 
 def SwapTheme():
     if ScopeAvoid.current == "dark":
         with open(path.realpath("styles/light.qss"), "r") as f:
@@ -45,7 +46,7 @@ def SwapTheme():
     else:
         with open(path.realpath("styles/dark.qss")) as f:
             window.setStyleSheet(f.read())
-        theme.current = "dark"
+        ScopeAvoid.current = "dark"
 
 def Loop():
     while True:
@@ -72,9 +73,9 @@ window = QWidget()
 with open("styles/dark.qss") as sheet:
     window.setStyleSheet(sheet.read())
 
-window.setWindowTitle("Python notepad")
-screen_x, screen_y = 500, 250
-window.setGeometry(100, 100, screen_x, screen_y)
+window.setWindowTitle("MCFunction Editor")
+screen_x, screen_y = 500, 300
+window.setGeometry(0, 0, screen_x, screen_y)
 window.move(60, 15)
 
 autoCompletions = [
@@ -90,6 +91,9 @@ saveButton = QPushButton("Save...", parent=window)
 openButton = QPushButton("Open...", parent=window)
 themeButton = QPushButton("Swap Theme", parent=window)
 
+commandInterface = QLineEdit("Type a Command (see /help)", parent=window)
+runCommand = QPushButton("Click to register command.", parent=window)
+runCommand.clicked.connect(lambda: commands.Execute(commandInterface.text()))
 mainTextBox = TxtCustom("Start typing...", parent=window)
 mainTextBox.setFixedSize(screen_x, int(screen_y/1.5))
 highlight = highlighting.MCFunction(mainTextBox.document())
@@ -109,7 +113,8 @@ lay.addWidget(openButton, 0, 1)
 lay.addWidget(themeButton, 0, 2)
 lay.addWidget(mainTextBox, 1, 0)
 lay.addWidget(lineCounter, 1, 1)
-
+lay.addWidget(commandInterface, 2, 0)
+lay.addWidget(runCommand, 3, 0)
 # Shortcut:
 shortcutSave = QShortcut(QKeySequence("Ctrl+S"), window)
 shortcutSave.activated.connect(lambda: Prompt("save"))
