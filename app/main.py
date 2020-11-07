@@ -2,11 +2,14 @@ import sys
 import time
 import highlighting, commands
 from os import path
-from PySide2.QtGui import QTextDocument, QKeySequence
-from PySide2.QtWidgets import QApplication,QLabel,QWidget,QGridLayout,QPushButton\
+from PyQt5.QtGui import QTextDocument, QKeySequence
+from PyQt5.QtWidgets import QApplication,QLabel,QWidget,QGridLayout,QPushButton\
 ,QPlainTextEdit,QFileDialog, QCompleter, QShortcut, QLineEdit
 import threading
-
+##### Read below.
+Pybox = False
+##### Set this to 'True' if you want a box in which you can execute some Python.
+##### You can use libraries with this too if you have them installed.
 saveLocation = None
 class ScopeAvoid():
     current = "dark"
@@ -20,18 +23,16 @@ def Prompt(option):
                  mainTextBox.setPlainText(file.read())
          except:
              print("Logging: Failed to get path for file.")
-    else: # if option is save.
+    else:
         if ScopeAvoid.normalSavePath is None:
             try:
                 f, _FILTER = QFileDialog.getSaveFileName()
-                # attempt to open file. if failed, normalSavePath is set back to None.
                 try:
                     open(path.realpath(f))
                 except:
                     ScopeAvoid.normalSavePath = None
                     return
                 ScopeAvoid.normalSavePath = f
-                # end
                 with open(path.realpath(f)) as file:
                     file.write(mainTextBox.toPlainText())
             except:
@@ -57,7 +58,6 @@ def SwapTheme():
 
 def Loop():
     while True:
-        time.sleep(0.5)
         if mainTextBox.textChanged:
             lines = mainTextBox.toPlainText()
             lineLen = len(lines.split("\n"))
@@ -75,6 +75,23 @@ class TxtCustom(QPlainTextEdit):
             tc.setPosition(p)
             self.setTextCursor(tc)
 
+def PythonBox(arg=None):
+    if arg != None:
+        try:
+            del pythonBox
+        except:
+            return
+    pythonBox = QPlainTextEdit("Type in Python here. Libs, if installed correctly will work too.", parent=window)
+    lay.addWidget(pythonBox, 1, 1)
+    pythonBox.setFixedSize(200, 200)
+    executeBox = QPushButton('Run Python')
+    def runpy():
+        try:
+            exec(pythonBox.toPlainText())
+        except:
+            print("PythonBox errored.")
+    executeBox.clicked.connect(runpy)
+    lay.addWidget(executeBox, 2, 1)
 
 app = QApplication(sys.argv)
 window = QWidget()
@@ -105,7 +122,7 @@ runCommand.clicked.connect(lambda: commands.Execute(commandInterface.text()))
 mainTextBox = TxtCustom("Start typing...", parent=window)
 mainTextBox.setFixedSize(screen_x, int(screen_y/1.5))
 highlight = highlighting.MCFunction(mainTextBox.document())
-
+execBox = QPushButton('push')
 lineCounter = QLabel("<h2>Lines: 0</h2>", parent=window)
 lineCounter.setStyleSheet("lineCounter {\
     text-align: center;\
@@ -115,14 +132,14 @@ saveButton.clicked.connect(lambda: Prompt("save"))
 openButton.clicked.connect(lambda: Prompt("open"))
 themeButton.clicked.connect(SwapTheme)
 
-
 lay.addWidget(saveButton, 0, 0)
 lay.addWidget(openButton, 0, 1)
 lay.addWidget(themeButton, 0, 2)
 lay.addWidget(mainTextBox, 1, 0)
 lay.addWidget(lineCounter, 1, 1)
 lay.addWidget(commandInterface, 2, 0)
-lay.addWidget(runCommand, 3, 0)
+lay.addWidget(runCommand, 3,0)
+
 # Shortcut:
 shortcutSave = QShortcut(QKeySequence("Ctrl+S"), window)
 shortcutSave.activated.connect(lambda: Prompt("save"))
@@ -130,9 +147,12 @@ shortcutSave.activated.connect(lambda: Prompt("save"))
 shortcutOpen = QShortcut(QKeySequence("Ctrl+O"), window)
 shortcutOpen.activated.connect(lambda: Prompt("open"))
 # end
+if Pybox == True:
+    PythonBox()
+else:
+    pass
 threading.Thread(target=Loop, daemon=True).start()
 window.setLayout(lay)
 window.show()
 print("Window shown.")
-sys.exit(app.exec())
-print("Failed to 'app.exec'.")
+sys.exit(app.exec())    
