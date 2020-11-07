@@ -2,8 +2,8 @@ import sys
 import time
 import highlighting, commands
 from os import path
-from PySide2.QtGui import QTextDocument, QKeySequence
-from PySide2.QtWidgets import QApplication,QLabel,QWidget,QGridLayout,QPushButton\
+from PyQt5.QtGui import QTextDocument, QKeySequence
+from PyQt5.QtWidgets import QApplication,QLabel,QWidget,QGridLayout,QPushButton\
 ,QPlainTextEdit,QFileDialog, QCompleter, QShortcut, QLineEdit
 import threading
 
@@ -20,15 +20,22 @@ def Prompt(option):
                  mainTextBox.setPlainText(file.read())
          except:
              print("Logging: Failed to get path for file.")
-    else:
+    else: # if option is save.
         if ScopeAvoid.normalSavePath is None:
             try:
                 f, _FILTER = QFileDialog.getSaveFileName()
+                # attempt to open file. if failed, normalSavePath is set back to None.
+                try:
+                    open(path.realpath(f))
+                except:
+                    ScopeAvoid.normalSavePath = None
+                    return
                 ScopeAvoid.normalSavePath = f
+                # end
                 with open(path.realpath(f)) as file:
                     file.write(mainTextBox.toPlainText())
             except:
-                pass
+                print("May have failed to save, try checking if file was updated, or press 'Ctrl+S' again.")
 
         if ScopeAvoid.normalSavePath is not None:
             try:
@@ -50,6 +57,7 @@ def SwapTheme():
 
 def Loop():
     while True:
+        time.sleep(0.5)
         if mainTextBox.textChanged:
             lines = mainTextBox.toPlainText()
             lineLen = len(lines.split("\n"))
@@ -91,7 +99,7 @@ saveButton = QPushButton("Save...", parent=window)
 openButton = QPushButton("Open...", parent=window)
 themeButton = QPushButton("Swap Theme", parent=window)
 
-commandInterface = QLineEdit("Type a Command (see /help)", parent=window)
+commandInterface = QLineEdit("tutorial", parent=window)
 runCommand = QPushButton("Click to register command.", parent=window)
 runCommand.clicked.connect(lambda: commands.Execute(commandInterface.text()))
 mainTextBox = TxtCustom("Start typing...", parent=window)
@@ -126,5 +134,5 @@ threading.Thread(target=Loop, daemon=True).start()
 window.setLayout(lay)
 window.show()
 print("Window shown.")
-sys.exit(app.exec_())
-print("Finished last line.")
+sys.exit(app.exec())
+print("Failed to 'app.exec'.")
