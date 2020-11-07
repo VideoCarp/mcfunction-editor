@@ -48,7 +48,8 @@ For **latest working beta**:
 * Run `pip install PySide2`, if it fails try `pip3 install PySide2` on Command Prompt/Terminal.
 * Download the repository
 
-<img src="https://raw.githubusercontent.com/VideoCarp/mcfunction-editor/main/repo/6B35181E-CBCF-43CC-A4A9-BA08CCF4D083.jpeg" width=300 height=200>
-
+<div align="center">
+    <img src="https://raw.githubusercontent.com/VideoCarp/mcfunction-editor/main/repo/6B35181E-CBCF-43CC-A4A9-BA08CCF4D083.jpeg" width=300 height=200>
+</div>
 * Go to the 'app' directory, go to `main.py`, read through the first comment.
 * Run `main.py` and you're done.
