@@ -41,3 +41,14 @@ Recent changes, whether or not in the current latest tag.<br>
 If you would like to test things **before** the tag is released, just manually copy each file **OR** clone/download the repo.
 * Add support for Python to be ran in the editor.
 * Fix bug of save shortcut that removes the need of save as every time using invalid file path if none is provided.
+# Installation:
+For the **latest release**, simply follow the instructions on the release. Releases are also called 'tags'.<br>
+For **latest working beta**:
+* Install Python 3.8+ (make sure to tick environment variable)
+* Run `pip install PySide2`, if it fails try `pip3 install PySide2` on Command Prompt/Terminal.
+* Download the repository
+
+<img src="https://raw.githubusercontent.com/VideoCarp/mcfunction-editor/main/repo/6B35181E-CBCF-43CC-A4A9-BA08CCF4D083.jpeg" width=300 height=200>
+
+* Go to the 'app' directory, go to `main.py`, read through the first comment.
+* Run `main.py` and you're done.
