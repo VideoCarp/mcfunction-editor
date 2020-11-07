@@ -2,8 +2,8 @@ import sys
 import time
 import highlighting, commands
 from os import path
-from PyQt5.QtGui import QTextDocument, QKeySequence
-from PyQt5.QtWidgets import QApplication,QLabel,QWidget,QGridLayout,QPushButton\
+from PySide2.QtGui import QTextDocument, QKeySequence
+from PySide2.QtWidgets import QApplication,QLabel,QWidget,QGridLayout,QPushButton\
 ,QPlainTextEdit,QFileDialog, QCompleter, QShortcut, QLineEdit
 import threading
 
