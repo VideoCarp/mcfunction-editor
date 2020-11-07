@@ -27,6 +27,17 @@ This editor is aimed specifically for commands and mcfunction, nothing else mean
 * __Command Bar__<br>
 *Does not refer to CLI*<br>
 The editor has a small command bar which you can run Python, some editor methods, or get documentation from.<br>
+* __In-editor Python__<br>
+*Available only in beta.*<br>
+Allows you to run Python to assist yourself with certain tasks, such as folder setup.<br>
+It also **allows libraries** to be used while running Python on the MCFunction editor.<br>
+This also means you can *easily* extend the exitor
 # Screenshots:
 
 <img src="https://github.com/VideoCarp/mcfunction-editor/blob/main/repo/img.png?raw=true">
+
+# Changelog
+Recent changes, whether or not in the current latest tag.<br>
+If you would like to test things **before** the tag is released, just manually copy each file **OR** clone/download the repo.
+* Add support for Python to be ran in the editor.
+* Fix bug of save shortcut that removes the need of save as every time using invalid file path if none is provided.
