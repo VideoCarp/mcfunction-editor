@@ -1,15 +1,15 @@
-import sys
-import time
-import highlighting, commands
+
+import highlighting, commands, time, sys
 from os import path
-from PyQt5.QtGui import QTextDocument, QKeySequence
-from PyQt5.QtWidgets import QApplication,QLabel,QWidget,QGridLayout,QPushButton\
-,QPlainTextEdit,QFileDialog, QCompleter, QShortcut, QLineEdit
+from PySide2.QtGui import QTextDocument, QKeySequence
+from PySide2.QtWidgets import QApplication,QLabel,QWidget,QGridLayout,QPushButton\
+,QPlainTextEdit,QFileDialog, QShortcut, QLineEdit
 import threading
-##### Read below.
+
 Pybox = False
-##### Set this to 'True' if you want a box in which you can execute some Python.
+##### Set this to 'True' if you always want a box in which you can execute some Python.
 ##### You can use libraries with this too if you have them installed.
+##### a bind (Ctrl+P) is also available. you can turn off PythonBox with ctrl+shift+p
 saveLocation = None
 class ScopeAvoid():
     current = "dark"
@@ -78,7 +78,9 @@ class TxtCustom(QPlainTextEdit):
 def PythonBox(arg=None):
     if arg != None:
         try:
-            del pythonBox
+            lay.removeWidget(pythonBox)
+            lay.removeWidget(executeBox)
+            return
         except:
             return
     pythonBox = QPlainTextEdit("Type in Python here. Libs, if installed correctly will work too.", parent=window)
@@ -103,12 +105,6 @@ screen_x, screen_y = 500, 300
 window.setGeometry(0, 0, screen_x, screen_y)
 window.move(60, 15)
 
-autoCompletions = [
-    "execute", "tag", "testforblock", "setblock", "fill",
-    "effect", "teleport", "summon", "clear", "give", "tellraw", "title",
-    "particle", "scoreboard", "testfor", "tickingarea", "add", "remove",
-    "gamerule", "true", "false", "tp", "type", "name"
-]
 
 lay = QGridLayout()
 # lay.addWidget(widget, row, column)
@@ -146,6 +142,12 @@ shortcutSave.activated.connect(lambda: Prompt("save"))
 
 shortcutOpen = QShortcut(QKeySequence("Ctrl+O"), window)
 shortcutOpen.activated.connect(lambda: Prompt("open"))
+
+shortcutPy = QShortcut(QKeySequence("Ctrl+P", window))
+removePybox = QShortcut(QKeySequence("Ctrl+Shift+P", window))
+shortcutPy.activated.connect(PythonBox)
+removePybox.activated.connect(lambda: PythonBox("remove"))
+
 # end
 if Pybox == True:
     PythonBox()
@@ -155,4 +157,4 @@ threading.Thread(target=Loop, daemon=True).start()
 window.setLayout(lay)
 window.show()
 print("Window shown.")
-sys.exit(app.exec())    
+sys.exit(app.exec())
