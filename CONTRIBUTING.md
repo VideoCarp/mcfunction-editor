@@ -3,8 +3,9 @@
 # Why Contribute?
 By contributing anything, not necessarily code, even just bug reports or feature requests, you are ***helping the project*** a lot.
 Not only that, but if it's a feature request, addition, or bug report you're getting that feature not only to yourself but to 
-all other users of this project.
+all other users of this project.<br>
 *If you're wondering how to contribute, scroll down below feature requests.*
+# Details
 All contributions are welcome, but here are some things you need to check before opening a pull request:<br>
 These are for **adding** features:
 * __Working__<br>
