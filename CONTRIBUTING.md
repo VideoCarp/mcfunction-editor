@@ -27,7 +27,7 @@ If you don't use Python (meaning you wouldn't be able to pull request) and/or do
 # How to Contribute
 This is probably unneeded, but often people don't contribute because they don't know how to.<br>
 Firstly, I want to clarify contributing **isn't always adding or improving code**. Even issues and bug reports are contributions.<br>
-Here's how to contribute:
+Here's how to contribute:<br>
 For **pull requests**:
 * Create a 'fork' of the repository, essentially copy it.
 * Find the file you want to change.
