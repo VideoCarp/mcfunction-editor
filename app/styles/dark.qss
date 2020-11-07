@@ -3,7 +3,7 @@ QWidget {
     background-color: #222;
 }
 QPlainTextEdit {
-   font-family: "Open Sans";
+   font-family: "Courier New";
    border: 1.5px groove #ffffff;
 }
 QPushButton {
