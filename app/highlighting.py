@@ -1,13 +1,9 @@
-import sys
+
 from PySide2.QtCore import QRegExp
 from PySide2.QtGui import QColor, QTextCharFormat, QFont, QSyntaxHighlighter
-import time
-
 print("Syntax Highlighter imported.")
 def format(color, style=''):
-    """
-    Return a QTextCharFormat with the given attributes.
-    """
+    # color formatter
     _color = QColor()
     if type(color) is not str:
         _color.setRgb(color[0], color[1], color[2])
@@ -48,7 +44,7 @@ class MCFunction(QSyntaxHighlighter):
         "execute", "tag", "testforblock", "setblock", "fill",
         "effect", "teleport", "summon", "clear", "give", "tellraw", "title",
         "particle", "scoreboard", "testfor", "tickingarea", "add", "remove",
-        "gamerule", "true", "false", "tp", "type", "name", "if"
+        "gamerule", "true", "false", "tp", "type", "name"
     ]
 
     # operators
