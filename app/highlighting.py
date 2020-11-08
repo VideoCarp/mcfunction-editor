@@ -44,7 +44,7 @@ class MCFunction(QSyntaxHighlighter):
         "execute", "tag", "testforblock", "setblock", "fill",
         "effect", "teleport", "summon", "clear", "give", "tellraw", "title",
         "particle", "scoreboard", "testfor", "tickingarea", "add", "remove",
-        "gamerule", "true", "false", "tp", "type", "name"
+        "gamerule", "true", "false", "tp", "type", "name", "if", "data", "datapack", "function"
     ]
 
     # operators
