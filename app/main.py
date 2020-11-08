@@ -1,8 +1,8 @@
 from sys import argv, exit
 import highlighting, commands
 from os.path import realpath
-from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import QApplication,QLabel,QWidget,QGridLayout,QPushButton\
+from PySide2.QtGui import QKeySequence
+from PySide2.QtWidgets import QApplication,QLabel,QWidget,QGridLayout,QPushButton\
 ,QPlainTextEdit,QFileDialog, QShortcut, QLineEdit
 from threading import Thread
 
