@@ -1,13 +1,13 @@
-
-import highlighting, commands, time, sys
-from os import path
-from PySide2.QtGui import QTextDocument, QKeySequence
-from PySide2.QtWidgets import QApplication,QLabel,QWidget,QGridLayout,QPushButton\
+from sys import argv, exit
+import highlighting, commands
+from os.path import realpath
+from PyQt5.QtGui import QKeySequence
+from PyQt5.QtWidgets import QApplication,QLabel,QWidget,QGridLayout,QPushButton\
 ,QPlainTextEdit,QFileDialog, QShortcut, QLineEdit
-import threading
+from threading import Thread
 
 Pybox = False
-##### Set this to 'True' if you always want a box in which you can execute some Python.
+##### Set this to 'True' if you want a box in which you can execute some Python.
 ##### You can use libraries with this too if you have them installed.
 ##### a bind (Ctrl+P) is also available. you can turn off PythonBox with ctrl+shift+p
 saveLocation = None
@@ -19,7 +19,7 @@ def Prompt(option):
     if option == "open":
          f, _FILTER = QFileDialog.getOpenFileName()
          try:
-             with open(path.realpath(f)) as file:
+             with open(realpath(f)) as file:
                  mainTextBox.setPlainText(file.read())
          except:
              print("Logging: Failed to get path for file.")
@@ -28,19 +28,19 @@ def Prompt(option):
             try:
                 f, _FILTER = QFileDialog.getSaveFileName()
                 try:
-                    open(path.realpath(f))
+                    open(realpath(f))
                 except:
                     ScopeAvoid.normalSavePath = None
                     return
                 ScopeAvoid.normalSavePath = f
-                with open(path.realpath(f)) as file:
+                with open(realpath(f)) as file:
                     file.write(mainTextBox.toPlainText())
             except:
                 print("May have failed to save, try checking if file was updated, or press 'Ctrl+S' again.")
 
         if ScopeAvoid.normalSavePath is not None:
             try:
-                with open(path.realpath(ScopeAvoid.normalSavePath), "w+") as file:
+                with open(realpath(ScopeAvoid.normalSavePath), "w+") as file:
                     file.write(mainTextBox.toPlainText())
             except:
                 print("Logging: Failed to get file path.")
@@ -48,11 +48,11 @@ def Prompt(option):
  
 def SwapTheme():
     if ScopeAvoid.current == "dark":
-        with open(path.realpath("styles/light.qss"), "r") as f:
+        with open(realpath("styles/light.qss"), "r") as f:
             window.setStyleSheet(f.read())
         ScopeAvoid.current = "light"
     else:
-        with open(path.realpath("styles/dark.qss")) as f:
+        with open(realpath("styles/dark.qss")) as f:
             window.setStyleSheet(f.read())
         ScopeAvoid.current = "dark"
 
@@ -95,7 +95,7 @@ def PythonBox(arg=None):
     executeBox.clicked.connect(runpy)
     lay.addWidget(executeBox, 2, 1)
 
-app = QApplication(sys.argv)
+app = QApplication(argv)
 window = QWidget()
 with open("styles/dark.qss") as sheet:
     window.setStyleSheet(sheet.read())
@@ -143,8 +143,8 @@ shortcutSave.activated.connect(lambda: Prompt("save"))
 shortcutOpen = QShortcut(QKeySequence("Ctrl+O"), window)
 shortcutOpen.activated.connect(lambda: Prompt("open"))
 
-shortcutPy = QShortcut(QKeySequence("Ctrl+P", window))
-removePybox = QShortcut(QKeySequence("Ctrl+Shift+P", window))
+shortcutPy = QShortcut(QKeySequence("Ctrl+P"), window)
+removePybox = QShortcut(QKeySequence("Ctrl+Shift+P"), window)
 shortcutPy.activated.connect(PythonBox)
 removePybox.activated.connect(lambda: PythonBox("remove"))
 
@@ -153,8 +153,8 @@ if Pybox == True:
     PythonBox()
 else:
     pass
-threading.Thread(target=Loop, daemon=True).start()
+Thread(target=Loop, daemon=True).start()
 window.setLayout(lay)
 window.show()
 print("Window shown.")
-sys.exit(app.exec())
+exit(app.exec_())
