@@ -85,7 +85,7 @@ def PythonBox(arg=None):
             return
     pythonBox = QPlainTextEdit("Type in Python here. Libs, if installed correctly will work too.", parent=window)
     lay.addWidget(pythonBox, 1, 1)
-    pythonBox.setFixedSize(200, 200)
+    pythonBox.setFixedSize(screen_x / 4, screen_y / 4)
     executeBox = QPushButton('Run Python')
     def runpy():
         try:
@@ -101,9 +101,9 @@ with open("styles/dark.qss") as sheet:
     window.setStyleSheet(sheet.read())
 
 window.setWindowTitle("MCFunction Editor")
-screen_x, screen_y = 500, 300
+screen_x, screen_y = 1200, 750
 window.setGeometry(0, 0, screen_x, screen_y)
-window.move(60, 15)
+window.move(960, 540)
 
 
 lay = QGridLayout()
