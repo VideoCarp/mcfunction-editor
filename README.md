@@ -6,7 +6,7 @@
   <a href="https://discord.gg/sTUFucA5xU">Discord Server</a>
 </div>
 <br>
-
+**This is the beta branch and may not work perfectly if installed.**
 This is a ready-to-use but being worked on text editor for Minecraft commands.<br>
 It's currently aimed at Minecraft Bedrock Edition ***and*** Java Edition.<br>
 See [CONTRIBUTING.md](https://github.com/VideoCarp/mcfunction-editor/blob/main/CONTRIBUTING.md) for contributions
