@@ -4,7 +4,6 @@ from os.path import realpath
 from PySide2.QtGui import QKeySequence
 from PySide2.QtWidgets import QApplication,QLabel,QWidget,QGridLayout,QPushButton\
 ,QPlainTextEdit,QFileDialog, QShortcut, QLineEdit
-from threading import Thread
 
 Pybox = False
 ##### Set this to 'True' if you want a box in which you can execute some Python.
@@ -56,12 +55,11 @@ def SwapTheme():
             window.setStyleSheet(f.read())
         ScopeAvoid.current = "dark"
 
-def Loop():
-    while True:
-        if mainTextBox.textChanged:
-            lines = mainTextBox.toPlainText()
-            lineLen = len(lines.split("\n"))
-            lineCounter.setText(f"<h1>Lines: {lineLen}</h1>")
+def highlighter():
+    if mainTextBox.textChanged:
+        lines = mainTextBox.toPlainText()
+        lineLen = len(lines.split("\n"))
+        lineCounter.setText(f"<h1>Lines: {lineLen}</h1>")
 
 class TxtCustom(QPlainTextEdit):
     def keyPressEvent(self, event):
@@ -153,7 +151,6 @@ if Pybox == True:
     PythonBox()
 else:
     pass
-Thread(target=Loop, daemon=True).start()
 window.setLayout(lay)
 window.show()
 print("Window shown.")
