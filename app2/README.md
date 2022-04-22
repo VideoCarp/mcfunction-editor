@@ -1,4 +1,4 @@
-# Latest build of mcfunction-editor
-* Huge optimizations
-* Ported to PySide6
-* Removed search feature (sadly, the community is too small for it to work)
+# App
+This is where the actual code is.<br>
+Feel free to go in any folders, they'll also have a description.<br>
+Make sure to read CONTRIBUTING.md if you came into this directory for contributing.
