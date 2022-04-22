@@ -1,4 +1,4 @@
-# App
-This is where the actual code is.<br>
-Feel free to go in any folders, they'll also have a description.<br>
-Make sure to read CONTRIBUTING.md if you came into this directory for contributing.
+# Styles
+In this folder, the stylesheets are here.
+### Why is 'light.qss' so much smaller than 'dark.qss'
+Most native operating systems default light theme, no changes are needed and it looks automatically native.
