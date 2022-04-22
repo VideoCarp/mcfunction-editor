@@ -55,7 +55,7 @@ def SwapTheme():
             window.setStyleSheet(f.read())
         ScopeAvoid.current = "dark"
 
-def highlighter():
+def countlines():
     if mainTextBox.textChanged:
         lines = mainTextBox.toPlainText()
         lineLen = len(lines.split("\n"))
@@ -118,14 +118,18 @@ mainTextBox.setFixedSize(screen_x, int(screen_y/1.5))
 highlight = highlighting.MCFunction(mainTextBox.document())
 execBox = QPushButton('push')
 lineCounter = QLabel("<h2>Lines: 0</h2>", parent=window)
-lineCounter.setStyleSheet("lineCounter {\
-    text-align: center;\
-}")
+lineCounter.setStyleSheet("""
+lineCounter {
+    text-align: center;
+}""")
 
+# connections
 saveButton.clicked.connect(lambda: Prompt("save"))
 openButton.clicked.connect(lambda: Prompt("open"))
 themeButton.clicked.connect(SwapTheme)
+mainTextBox.textChanged.connect(countlines)
 
+# Adding to layout
 lay.addWidget(saveButton, 0, 0)
 lay.addWidget(openButton, 0, 1)
 lay.addWidget(themeButton, 0, 2)
