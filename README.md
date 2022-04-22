@@ -15,11 +15,10 @@ and/or feature requests.
 * __Syntax Highlighting__<br>
 This editor has proper syntax highlighting for commands.
 * __Performance__<br>
-Although it's written in Python, this editor still only uses ~15 mb of memory a second after being opened.<br>
-Comparing this to your average Electron hello world, it's ~10x more performant on the memory side.<br>
-If enough people want better performance, I can/may write this in C++, meaning it will have much better performance.
+Although it's written in Python, this editor is _way_ more efficient than performance intensive editors like VSCode.
+It uses at least 10 times less ram. And on my 1.8 GHz (very bad) CPU, CPU usage is around 0-2% while writing!
 * __Small__<br>
-The text editor is relatively small compared to any others. The download size is very small and its lightweight.
+The text editor is relatively small compared to any others. The download size is very small and it's lightweight.
 * __Easy Manipulation__<br>
 You can *easily* manipulate parts of the text editor by just configuring variables.
 * __Aimed at Commands__<br>
