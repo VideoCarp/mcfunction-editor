@@ -1,8 +1,0 @@
-QWidget {
-    color: #000;
-    background-color: #fff;
-}
-
-QPlainTextEdit {
-   font-family: "Courier New"; 
-}
