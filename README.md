@@ -6,6 +6,8 @@
   <a href="https://discord.gg/sTUFucA5xU">Discord Server</a>
 </div>
 <br>
+![image](https://user-images.githubusercontent.com/66365570/164748718-18647bd9-ab9a-40b1-84b8-cea4576833ce.png)
+
 
 This is a ready-to-use but being worked on text editor for Minecraft commands.<br>
 It's currently aimed at Minecraft Bedrock Edition ***and*** Java Edition.<br>
@@ -17,6 +19,8 @@ This editor has proper syntax highlighting for commands.
 * __Performance__<br>
 Although it's written in Python, this editor is _way_ more efficient than performance intensive editors like VSCode.
 It uses at least 10 times less ram. And on my 1.8 GHz (very bad) CPU, CPU usage is around 0-2% while writing!
+![image](https://user-images.githubusercontent.com/66365570/164748899-40c48b7b-cdf5-4ef2-b8c9-8ba7eed47397.png)
+
 * __Small__<br>
 The text editor is relatively small compared to any others. The download size is very small and it's lightweight.
 * __Easy Manipulation__<br>
