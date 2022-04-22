@@ -44,8 +44,8 @@ If you would like to test things **before** the tag is released, just manually c
 # Installation:
 For the **latest release**, simply follow the instructions on the release. Releases are also called 'tags'.<br>
 For **latest working beta**:
-* Install Python 3.8+ (make sure to tick environment variable)
-* Run `pip install PySide2`, if it fails try `pip3 install PySide2` on Command Prompt/Terminal.
+* Install Python 3.9+ (make ***sure to tick environment variable***)
+* Run `pip install PySide6`, if it fails try `pip3 install PySide6` on Command Prompt/Terminal.
 * Download the repository
 
 <div align="center">
@@ -54,3 +54,17 @@ For **latest working beta**:
 
 * Go to the 'app' directory, go to `main.py`, read through the first comment.
 * Run `main.py` and you're done.
+I recommend you make a shortcut to `main.py`.
+If there are any problems, get the path to your installation of MCFunction-Editor. Copy it.
+Go to Command Prompt and run `cd <path>`.
+Then, do `py main.py`.
+
+To make a shortcut, create a batch file. Put the following contents in it:
+```batch
+cd <path to mcfunction editor>
+py main.py
+```
+
+`pip is not recognized` well if `pip3` doesn't work either, search up how to add python to your environment path variable. You did not install Python
+with the same instructions here, fortunately it can be fixed. Same goes if any command won't work.
+
