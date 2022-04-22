@@ -27,6 +27,8 @@ It uses at least 10 times less ram. And on my 1.8 GHz (very bad) CPU, CPU usage 
 The text editor is relatively small compared to any others. The download size is very small and it's lightweight.
 * __Easy Manipulation__<br>
 You can *easily* manipulate parts of the text editor by just configuring variables.
+You can also change your themes in familiar ways by changing the "dark.qss" and "light.qss" files. Is the font ugly? Change it!
+If you need help, don't hesitate to ask.
 * __Aimed at Commands__<br>
 This editor is aimed specifically for commands and mcfunction, nothing else meaning it's the main focus and will be richest.
 * __Command Bar__<br>
