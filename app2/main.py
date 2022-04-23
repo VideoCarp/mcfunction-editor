@@ -185,7 +185,7 @@ file_menu = menubar.addMenu("File")
 theme_menu = menubar.addMenu("Theme")
 file_menu.addAction("Save...", save_file, "save")
 file_menu.addAction("Open...", open_file, "open")
-file_menu.addAction("do not touch", save_as, "save as!")
+file_menu.addAction("Save as...", save_as, "saveas")
 theme_menu.addAction("Swap Theme", swap_theme, "Swap Theme")
 
 # connections
