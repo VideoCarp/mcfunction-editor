@@ -53,3 +53,14 @@ QScrollBar::handle:vertical {
     background: #2d7dee;
     min-height: 0px;
 }
+/*Define a fitting style for QMenuBar*/
+QMenuBar {
+    background-color: #2d7dee;
+    color: #fff;
+    border: 4px groove #ffffff;
+}
+QMenuBar::item:hover {
+    background-color: #40f2726e;
+    color: #000000;
+    border: 4px groove #ffffff;
+}
