@@ -27,10 +27,8 @@ def msgbox(info, title="Command Bar"):
 
 
 def start_switch(thevar, conditions):
-    KEYS = []
     thevar = thevar.replace("/", "").replace(" ", "")
-    for k, v in conditions.items():
-        KEYS.append(k)
+    KEYS = [k for k, v in conditions.items()]
     for k, v in conditions.items():
         if thevar.startswith(k):
             v()
@@ -43,7 +41,7 @@ def start_switch(thevar, conditions):
 def save_path(location):
     try:
         ScopeAvoid.normal_save_path = location
-    except:
+    except Exception:
         msgbox("Failed!")
 
 
@@ -53,7 +51,7 @@ def do_command(inpvar):
     del LST
     try:
         eval(done)
-    except:
+    except Exception:
         msgbox("Failed")
 
 
