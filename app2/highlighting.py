@@ -84,8 +84,8 @@ class MCFunction(QSyntaxHighlighter):
 
         # Keyword, operator, and brace rules
         rules += [(r"\b%s\b" % w, 0, STYLES["keyword"]) for w in MCFunction.keywords]
-        rules += [(r"%s" % o, 0, STYLES["operator"]) for o in MCFunction.operators]
-        rules += [(r"%s" % b, 0, STYLES["brace"]) for b in MCFunction.braces]
+        rules += [(f"{o}", 0, STYLES["operator"]) for o in MCFunction.operators]
+        rules += [(f"{b}", 0, STYLES["brace"]) for b in MCFunction.braces]
 
         # All other rules
         rules += [
