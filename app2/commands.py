@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QMessageBox
 
 class ScopeAvoid:
     current = "dark"
-    normalSavePath = None
+    normal_save_path = None
 
 
 def msgbox(info, title="Command Bar"):
@@ -26,7 +26,7 @@ def msgbox(info, title="Command Bar"):
     msg.exec()
 
 
-def startsSwitch(thevar, conditions):
+def start_switch(thevar, conditions):
     KEYS = []
     thevar = thevar.replace("/", "").replace(" ", "")
     for k, v in conditions.items():
@@ -40,14 +40,14 @@ def startsSwitch(thevar, conditions):
     msgbox("Errored.")
 
 
-def SavePath(location):
+def save_path(location):
     try:
-        ScopeAvoid.normalSavePath = location
+        ScopeAvoid.normal_save_path = location
     except:
         msgbox("Failed!")
 
 
-def doCommand(inpvar):
+def do_command(inpvar):
     LST = inpvar.split("cmd")
     done = LST[1]
     del LST
@@ -57,7 +57,7 @@ def doCommand(inpvar):
         msgbox("Failed")
 
 
-def CallCode(code: str):
+def call_code(code: str):
     exec(code)
 
 
@@ -68,12 +68,12 @@ def Execute(var):
     1. `help' Displays help menu (this).
     2. `cmd <function_call>': `eval`s a function call.
     Available Functions:
-    - `SavePath(location)': Modify the path in which saves are directed.
+    - `save_path(location)': Modify the path in which saves are directed.
     Normally, this is done automatically when you save for the first time.
-    - `CallCode(code: str)': Run some Python code. (can be done with exec too.)
+    - `call_code(code: str)': Run some Python code. (can be done with exec too.)
     """,
             "Help",
         ),
-        "cmd": lambda: doCommand(var),
+        "cmd": lambda: do_command(var),
     }
-    startsSwitch(var, condition)
+    start_switch(var, condition)
