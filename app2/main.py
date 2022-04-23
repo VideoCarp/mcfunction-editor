@@ -35,7 +35,7 @@ def prompt(option):
         try:
             with open(realpath(f)) as file:
                 main_text_box.setPlainText(file.read())
-        except:
+        except FileNotFoundError:
             print("Logging: Failed to get path for file.")
     else:
         if ScopeAvoid.normal_save_path is None:
@@ -43,13 +43,13 @@ def prompt(option):
                 f, _FILTER = QFileDialog.getSaveFileName()
                 try:
                     open(realpath(f))
-                except:
+                except FileNotFoundError:
                     ScopeAvoid.normal_save_path = None
                     return
                 ScopeAvoid.normal_save_path = f
                 with open(realpath(f)) as file:
                     file.write(main_text_box.toPlainText())
-            except:
+            except FileNotFoundError:
                 print(
                     "May have failed to save, try checking if file was updated, or press 'Ctrl+S' again."
                 )
@@ -58,7 +58,7 @@ def prompt(option):
             try:
                 with open(realpath(ScopeAvoid.normal_save_path), "w+") as file:
                     file.write(main_text_box.toPlainText())
-            except:
+            except FileNotFoundError:
                 print("Logging: Failed to get file path.")
 
 
@@ -112,7 +112,7 @@ def pythonbox(arg=None):
     def runpy():
         try:
             exec(pythonbox.toPlainText())
-        except:
+        except BaseException:
             print("pythonbox errored.")
 
     execute_box.clicked.connect(runpy)
@@ -210,8 +210,6 @@ removepybox.activated.connect(lambda: pythonbox("remove"))
 # end
 if pybox == True:
     pythonbox()
-else:
-    pass
 window.setLayout(finished)
 window.show()
 print("Window shown.")
