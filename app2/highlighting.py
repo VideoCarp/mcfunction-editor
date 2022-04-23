@@ -28,7 +28,7 @@ STYLES = {
     "keyword": format([65, 173, 209], "italic"),  # light blue
     "operator": format([52, 125, 235]),  # cobalt (almost)
     "brace": format([114, 137, 218]),  # tomato
-    "string": format([216, 219, 42]),  # yellow
+    "string": format([246, 190, 0]),  # yellow
     "string2": format([123, 173, 29]),  # olive
     "comment": format([100, 100, 100], "italic"),  # gray/grey
     "numbers": format([188, 66, 245]),  # magenta
