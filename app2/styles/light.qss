@@ -1,8 +1,46 @@
-QWidget {
+/*
+Light theme has the native look + a few additions
+Feel free to change anything here
+`number'px means how many pixels
+It's not complex, so give it a try
+And there are comments on fonts.
+As for colours, you can use hex values, for example: #ff0000;
+which means red.
+*/
+
+
+QPushButton {
+    border: 4px groove #000;
+    background-color: #94bcf4;
     color: #000;
-    background-color: #fff;
+    border-radius: 10px;
 }
 
+
+QLineEdit {
+    border: 4px groove #000;
+    background-color: #94bcf4;
+    color: #000;
+}
+
+
 QPlainTextEdit {
-   font-family: "Courier New"; 
+    font-family: "Arial"; /* or any other font you have downloaded, for example change it to `"Fira Code"` */
+    font-size: 12px;
+    border: 4px groove #000;
+    border-radius: 10px;
+}
+
+
+QScrollBar:vertical {
+    border: 1px solid #000;
+    background: #000;
+    width: 10px;
+    margin: 0px 0px 0px 0px;
+}
+
+
+QScrollBar::handle:vertical {
+    background: #000;
+    min-height: 0px;
 }
