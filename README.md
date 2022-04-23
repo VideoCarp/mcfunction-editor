@@ -7,7 +7,11 @@
 </div>
 <br>
 
-![image](https://user-images.githubusercontent.com/66365570/164748718-18647bd9-ab9a-40b1-84b8-cea4576833ce.png)
+Default theme  
+![image](https://user-images.githubusercontent.com/66365570/164910068-c8a76c1d-9fe9-43d8-9373-9f677500d14e.png)
+  
+Light theme  
+![image](https://user-images.githubusercontent.com/66365570/164910107-b0bd9a40-6a48-40bd-950a-1ae7c2053741.png)
 
 
 This is a ready-to-use but being worked on text editor for Minecraft commands.<br>
