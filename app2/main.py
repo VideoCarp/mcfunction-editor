@@ -1,6 +1,7 @@
 from sys import argv, exit
 import highlighting, commands
-from os.path import realpath
+from os.path import realpath, exists
+from os import listdir
 from PySide6.QtGui import QKeySequence, QShortcut
 from PySide6.QtWidgets import (
     QApplication,
@@ -14,8 +15,10 @@ from PySide6.QtWidgets import (
     QLineEdit,
     QSpacerItem,
     QSizePolicy,
+    QMenuBar,
 )
 from PySide6.QtCore import Qt
+
 
 pybox = False
 ##### Set this to 'True' if you want a box in which you can execute some Python.
@@ -28,41 +31,61 @@ class ScopeAvoid:
     current = "dark"
     normal_save_path = None
 
+def visualize(f):
+    try:
+        visual_extracter(f)
+    except FileNotFoundError as err:
+        print(err)
+        file_name.setText("<h2>File: None</h2>")
+        file_location.setText("<h2>Location: None</h2>")
 
-def prompt(option):
-    if option == "open":
-        f, _FILTER = QFileDialog.getOpenFileName()
-        try:
+
+def visual_extracter(f):
+    # get path to directory
+    dirpath = "/".join(f.split("/")[:-1])
+    # make the visualisations
+    files = listdir(dirpath)
+    visualstring = "".join(f"{file}\n" for file in files)
+    file_location.setText(visualstring)
+    # do the file name
+    text = f[f.rfind("/") + 1:]
+    file_name.setText(f"<h2>Editing: {text}</h2>")
+
+
+def open_file():
+        f, _ = QFileDialog.getOpenFileName()
+        if exists(f):
             with open(realpath(f)) as file:
                 main_text_box.setPlainText(file.read())
-        except FileNotFoundError:
-            print("Logging: Failed to get path for file.")
+                return
+        print("Logging: Failed to open file.")
+    
+def save_file():
+    if ScopeAvoid.normal_save_path is None:
+        f, _ = QFileDialog.getSaveFileName()
+        pathto = realpath(f)
+        ScopeAvoid.normal_save_path = f
+        with open(pathto, "w+") as file:
+            file.write(main_text_box.toPlainText())
+
+        visualize(f)
+
     else:
-        if ScopeAvoid.normal_save_path is None:
-            try:
-                f, _FILTER = QFileDialog.getSaveFileName()
-                try:
-                    open(realpath(f))
-                except FileNotFoundError:
-                    ScopeAvoid.normal_save_path = None
-                    return
-                ScopeAvoid.normal_save_path = f
-                with open(realpath(f)) as file:
-                    file.write(main_text_box.toPlainText())
-            except FileNotFoundError:
-                print(
-                    "May have failed to save, try checking if file was updated, or press 'Ctrl+S' again."
-                )
+        filepath = ScopeAvoid.normal_save_path
+        if exists(filepath):
+            with open(realpath(filepath), "w+") as file:
+                file.write(main_text_box.toPlainText())
+                return visualize(filepath)
 
-        if ScopeAvoid.normal_save_path is not None:
-            try:
-                with open(realpath(ScopeAvoid.normal_save_path), "w+") as file:
-                    file.write(main_text_box.toPlainText())
-            except FileNotFoundError:
-                print("Logging: Failed to get file path.")
+        print("Logging: Invalid save path.")
+        ScopeAvoid.normal_save_path = None
+
+def save_as():
+    ScopeAvoid.normal_save_path = None
+    save_file()
 
 
-def SwapTheme():
+def swap_theme():
     if ScopeAvoid.current == "dark":
         with open(realpath("styles/light.qss"), "r") as f:
             window.setStyleSheet(f.read())
@@ -139,11 +162,8 @@ window.move(960, 540)
 ###################################
 lay = QVBoxLayout()
 lay0 = QVBoxLayout()
-finished = QHBoxLayout()
+lay1 = QHBoxLayout()
 spacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-save_button = QPushButton("Save...", parent=window)
-open_button = QPushButton("Open...", parent=window)
-theme_button = QPushButton("Swap Theme", parent=window)
 command_interface = QLineEdit("help", parent=window)
 run_command = QPushButton("Click to register command.", parent=window)
 main_text_box = TxtCustom("Start typing...", parent=window)
@@ -157,54 +177,54 @@ line_counter {
     text-align: center;
 }"""
 )
-
+file_name = QLabel("<h2>Editing: None</h2>", parent=window)
+file_location = QLabel("No directory opened", parent=window)
+# Menu bar
+menubar = QMenuBar(None)
+file_menu = menubar.addMenu("File")
+theme_menu = menubar.addMenu("Theme")
+file_menu.addAction("Save...", save_file, "save")
+file_menu.addAction("Open...", open_file, "open")
+file_menu.addAction("do not touch", save_as, "save as!")
+theme_menu.addAction("Swap Theme", swap_theme, "Swap Theme")
 
 # connections
 run_command.clicked.connect(lambda: commands.Execute(command_interface.text()))
-save_button.clicked.connect(lambda: prompt("save"))
-open_button.clicked.connect(lambda: prompt("open"))
-theme_button.clicked.connect(SwapTheme)
 main_text_box.textChanged.connect(countlines)
 
 
-# Sizing
-small = 100
-open_button.setFixedSize(small, small)
-save_button.setFixedSize(small, small)
-theme_button.setFixedSize(small, small)
-
-"""
-open_button  :: main_text_box
-save_button  :: main_text_box
-theme_button :: main_text_box
-line_counter :: main_text_box
-             :: command_interface :: run_command
-"""
 # LEFT SIDE
-lay.addWidget(save_button)
-lay.addWidget(open_button)
-lay.addWidget(theme_button)
 lay.addWidget(line_counter)
+lay.addWidget(file_location)
 lay.addItem(spacer)
+
 
 # RIGHT SIDE
 lay0.addWidget(main_text_box)
 lay0.addWidget(command_interface)
 lay0.addWidget(run_command)
+lay0.addWidget(file_name)
 lay0.addItem(spacer)
-finished = QHBoxLayout()
-finished.addLayout(lay)
-finished.addLayout(lay0)
+lay1 = QHBoxLayout()
+lay1.addLayout(lay)
+lay1.addLayout(lay0)
+
+# finish up the layout
+finished = QVBoxLayout()
+finished.addWidget(menubar)
+finished.addLayout(lay1)
+
+
 # Shortcut:
-shortcutSave = QShortcut(QKeySequence("Ctrl+S"), window)
-shortcutSave.activated.connect(lambda: prompt("save"))
+shortcut_save = QShortcut(QKeySequence("Ctrl+S"), window)
+shortcut_save.activated.connect(save_file)
 
-shortcutOpen = QShortcut(QKeySequence("Ctrl+O"), window)
-shortcutOpen.activated.connect(lambda: prompt("open"))
+shortcut_open = QShortcut(QKeySequence("Ctrl+O"), window)
+shortcut_open.activated.connect(open_file)
 
-shortcutPy = QShortcut(QKeySequence("Ctrl+P"), window)
+shortcut_py = QShortcut(QKeySequence("Ctrl+P"), window)
 removepybox = QShortcut(QKeySequence("Ctrl+Shift+P"), window)
-shortcutPy.activated.connect(pythonbox)
+shortcut_py.activated.connect(pythonbox)
 removepybox.activated.connect(lambda: pythonbox("remove"))
 
 # end
