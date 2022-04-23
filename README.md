@@ -43,9 +43,6 @@ The editor has a small command bar which you can run Python, some editor methods
 Allows you to run Python to assist yourself with certain tasks, such as folder setup.<br>
 It also **allows libraries** to be used while running Python on the MCFunction editor.<br>
 This also means you can *easily* extend the exitor
-# Screenshots:
-
-<img src="https://github.com/VideoCarp/mcfunction-editor/blob/main/repo/img.png?raw=true">
 
 # Changelog
 Recent changes, whether or not in the current latest tag.<br>
@@ -62,6 +59,8 @@ For **latest working beta**:
 <div align="center">
     <img src="https://raw.githubusercontent.com/VideoCarp/mcfunction-editor/main/repo/6B35181E-CBCF-43CC-A4A9-BA08CCF4D083.jpeg" width=300 height=200>
 </div>
+**NOTE**: I highly recommend downloading the latest _tag_ or release. Since it has an easy to download ZIP.
+And it's safe to use (because it's been tested well).
 
 * Go to the 'app' directory, go to `main.py`, read through the first comment.
 * Run `main.py` and you're done.
