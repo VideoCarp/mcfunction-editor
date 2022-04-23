@@ -1,60 +1,63 @@
 from sys import argv, exit
 import highlighting, commands
 from os.path import realpath
-from os import getcwd
 from PySide6.QtGui import QKeySequence, QShortcut
 from PySide6.QtWidgets import (
     QApplication,
     QLabel,
     QWidget,
-    QGridLayout,
+    QVBoxLayout,
+    QHBoxLayout,
     QPushButton,
     QPlainTextEdit,
     QFileDialog,
     QLineEdit,
+    QSpacerItem,
+    QSizePolicy,
 )
+from PySide6.QtCore import Qt
 
-Pybox = False
+pybox = False
 ##### Set this to 'True' if you want a box in which you can execute some Python.
 ##### You can use libraries with this too if you have them installed.
-##### a bind (Ctrl+P) is also available. you can turn off PythonBox with ctrl+shift+p
-saveLocation = None
+##### a bind (Ctrl+P) is also available. you can turn off pythonbox with ctrl+shift+p
+save_location = None
 
 
 class ScopeAvoid:
     current = "dark"
-    normalSavePath = None
+    normal_save_path = None
 
 
-def Prompt(option):
+def prompt(option):
     if option == "open":
         f, _FILTER = QFileDialog.getOpenFileName()
         try:
             with open(realpath(f)) as file:
-                mainTextBox.setPlainText(file.read())
+                main_text_box.setPlainText(file.read())
         except:
             print("Logging: Failed to get path for file.")
     else:
-        if ScopeAvoid.normalSavePath is None:
+        if ScopeAvoid.normal_save_path is None:
             try:
                 f, _FILTER = QFileDialog.getSaveFileName()
                 try:
                     open(realpath(f))
                 except:
-                    ScopeAvoid.normalSavePath = None
+                    ScopeAvoid.normal_save_path = None
                     return
-                ScopeAvoid.normalSavePath = f
+                ScopeAvoid.normal_save_path = f
                 with open(realpath(f)) as file:
-                    file.write(mainTextBox.toPlainText())
+                    file.write(main_text_box.toPlainText())
             except:
                 print(
                     "May have failed to save, try checking if file was updated, or press 'Ctrl+S' again."
                 )
 
-        if ScopeAvoid.normalSavePath is not None:
+        if ScopeAvoid.normal_save_path is not None:
             try:
-                with open(realpath(ScopeAvoid.normalSavePath), "w+") as file:
-                    file.write(mainTextBox.toPlainText())
+                with open(realpath(ScopeAvoid.normal_save_path), "w+") as file:
+                    file.write(main_text_box.toPlainText())
             except:
                 print("Logging: Failed to get file path.")
 
@@ -71,10 +74,10 @@ def SwapTheme():
 
 
 def countlines():
-    if mainTextBox.textChanged:
-        lines = mainTextBox.toPlainText()
+    if main_text_box.textChanged:
+        lines = main_text_box.toPlainText()
         lineLen = len(lines.split("\n"))
-        lineCounter.setText(f"<h1>Lines: {lineLen}</h1>")
+        line_counter.setText(f"<h1>Lines: {lineLen}</h1>")
 
 
 class TxtCustom(QPlainTextEdit):
@@ -90,32 +93,35 @@ class TxtCustom(QPlainTextEdit):
             self.setTextCursor(tc)
 
 
-def PythonBox(arg=None):
+def pythonbox(arg=None):
     if arg != None:
         try:
-            lay.removeWidget(pythonBox)
-            lay.removeWidget(executeBox)
+            lay.removeWidget(pythonbox)
+            lay.removeWidget(execute_box)
             return
         except:
             return
-    pythonBox = QPlainTextEdit(
+    pythonbox = QPlainTextEdit(
         "Type in Python here. Libs, if installed correctly will work too.",
         parent=window,
     )
-    lay.addWidget(pythonBox, 1, 1)
-    pythonBox.setFixedSize(screen_x / 4, screen_y / 4)
-    executeBox = QPushButton("Run Python")
+    lay.addWidget(pythonbox, 1, 1)
+    pythonbox.setFixedSize(screen_x / 4, screen_y / 4)
+    execute_box = QPushButton("Run Python")
 
     def runpy():
         try:
-            exec(pythonBox.toPlainText())
+            exec(pythonbox.toPlainText())
         except:
-            print("PythonBox errored.")
+            print("pythonbox errored.")
 
-    executeBox.clicked.connect(runpy)
-    lay.addWidget(executeBox, 2, 1)
+    execute_box.clicked.connect(runpy)
+    lay.addWidget(execute_box, 2, 1)
 
 
+##############################
+# Stuff other than functions #
+##############################
 app = QApplication(argv)
 window = QWidget()
 
@@ -128,60 +134,85 @@ window.setGeometry(0, 0, screen_x, screen_y)
 window.move(960, 540)
 
 
-lay = QGridLayout()
-# lay.addWidget(widget, row, column)
-saveButton = QPushButton("Save...", parent=window)
-openButton = QPushButton("Open...", parent=window)
-themeButton = QPushButton("Swap Theme", parent=window)
-
-commandInterface = QLineEdit("tutorial", parent=window)
-runCommand = QPushButton("Click to register command.", parent=window)
-runCommand.clicked.connect(lambda: commands.Execute(commandInterface.text()))
-mainTextBox = TxtCustom("Start typing...", parent=window)
-mainTextBox.setFixedSize(screen_x, int(screen_y / 1.5))
-highlight = highlighting.MCFunction(mainTextBox.document())
-execBox = QPushButton("push")
-lineCounter = QLabel("<h2>Lines: 0</h2>", parent=window)
-lineCounter.setStyleSheet(
+###################################
+# Layouts  and widget definitions #
+###################################
+lay = QVBoxLayout()
+lay0 = QVBoxLayout()
+finished = QHBoxLayout()
+spacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+save_button = QPushButton("Save...", parent=window)
+open_button = QPushButton("Open...", parent=window)
+theme_button = QPushButton("Swap Theme", parent=window)
+command_interface = QLineEdit("help", parent=window)
+run_command = QPushButton("Click to register command.", parent=window)
+main_text_box = TxtCustom("Start typing...", parent=window)
+main_text_box.setFixedSize(screen_x, int(screen_y / 1.5))
+highlight = highlighting.MCFunction(main_text_box.document())
+exec_box = QPushButton("push")
+line_counter = QLabel("<h2>Lines: 0</h2>", parent=window)
+line_counter.setStyleSheet(
     """
-lineCounter {
+line_counter {
     text-align: center;
 }"""
 )
 
+
 # connections
-saveButton.clicked.connect(lambda: Prompt("save"))
-openButton.clicked.connect(lambda: Prompt("open"))
-themeButton.clicked.connect(SwapTheme)
-mainTextBox.textChanged.connect(countlines)
+run_command.clicked.connect(lambda: commands.Execute(command_interface.text()))
+save_button.clicked.connect(lambda: prompt("save"))
+open_button.clicked.connect(lambda: prompt("open"))
+theme_button.clicked.connect(SwapTheme)
+main_text_box.textChanged.connect(countlines)
 
-# Adding to layout
-lay.addWidget(saveButton, 0, 0)
-lay.addWidget(openButton, 0, 1)
-lay.addWidget(themeButton, 0, 2)
-lay.addWidget(mainTextBox, 1, 0)
-lay.addWidget(lineCounter, 1, 1)
-lay.addWidget(commandInterface, 2, 0)
-lay.addWidget(runCommand, 3, 0)
 
+# Sizing
+small = 100
+open_button.setFixedSize(small, small)
+save_button.setFixedSize(small, small)
+theme_button.setFixedSize(small, small)
+
+"""
+open_button  :: main_text_box
+save_button  :: main_text_box
+theme_button :: main_text_box
+line_counter :: main_text_box
+             :: command_interface :: run_command
+"""
+# LEFT SIDE
+lay.addWidget(save_button)
+lay.addWidget(open_button)
+lay.addWidget(theme_button)
+lay.addWidget(line_counter)
+lay.addItem(spacer)
+
+# RIGHT SIDE
+lay0.addWidget(main_text_box)
+lay0.addWidget(command_interface)
+lay0.addWidget(run_command)
+lay0.addItem(spacer)
+finished = QHBoxLayout()
+finished.addLayout(lay)
+finished.addLayout(lay0)
 # Shortcut:
 shortcutSave = QShortcut(QKeySequence("Ctrl+S"), window)
-shortcutSave.activated.connect(lambda: Prompt("save"))
+shortcutSave.activated.connect(lambda: prompt("save"))
 
 shortcutOpen = QShortcut(QKeySequence("Ctrl+O"), window)
-shortcutOpen.activated.connect(lambda: Prompt("open"))
+shortcutOpen.activated.connect(lambda: prompt("open"))
 
 shortcutPy = QShortcut(QKeySequence("Ctrl+P"), window)
-removePybox = QShortcut(QKeySequence("Ctrl+Shift+P"), window)
-shortcutPy.activated.connect(PythonBox)
-removePybox.activated.connect(lambda: PythonBox("remove"))
+removepybox = QShortcut(QKeySequence("Ctrl+Shift+P"), window)
+shortcutPy.activated.connect(pythonbox)
+removepybox.activated.connect(lambda: pythonbox("remove"))
 
 # end
-if Pybox == True:
-    PythonBox()
+if pybox == True:
+    pythonbox()
 else:
     pass
-window.setLayout(lay)
+window.setLayout(finished)
 window.show()
 print("Window shown.")
 exit(app.exec())
